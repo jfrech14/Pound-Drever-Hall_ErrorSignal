@@ -1,4 +1,4 @@
-%For a pherical symmetric cavity
+%For a spherically symmetric cavity
 
 L=.135;  %cavity length in meters
 C=2.998E8; %speed of light m/s
