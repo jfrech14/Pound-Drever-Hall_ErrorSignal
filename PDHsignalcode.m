@@ -1,17 +1,27 @@
 %For a spherically symmetric cavity
 
+%Set EOM and laser Properties
+lambda=811.754E-9; %wavelength in meters
+Feom=35.15E6;  %EOM frequency
+Pc=0.016;  %Carrier power in W
+Ps=0.00072;  %Sideband power in W
+Pss=0.000005;  %Secondary sideband power in W
+
+%Set Cavity Properties
 L=.135;  %cavity length in meters
 C=2.998E8; %speed of light m/s
 t=0;  %stating time is static for future use
+R1=0.9973;   %Mirror 1 reflectivity
+R2=0.9973;   %Mirror 2 reflectivity
 r1=5; %radius of M1 in meters
 g1=1-L/r1;
 r2=10000000000000000;  %radius of M2 in meters
 g2=1-L/r2;
-lambda=811.754E-9; %wavelength in meters
+
+%Calculated Properties
+OMEGA=2*pi*Feom;  %EOM angular frequency
 omega0=2*pi*C/lambda;  %light angular frequency
 nu0=omega0/2/pi; %light frequency
-R1=0.9973;   %Mirror 1 reflectivity
-R2=0.9973;   %Mirror 2 reflectivity
 r=sqrt(R1*R2);
 Trt=2*L/C;  %Round-trip time
 linewidth=C/2/L*(1-sqrt(R1*R2))/(pi*((R1*R2)^.25)); %cavity linewidth
@@ -20,6 +30,7 @@ FSR=C/(2*L);   %free spectral range
 Q=C/linewidth/lambda; %Cavity Q-factor
 Lifetime=Q/omega0; %Photon Lifetime
 
+%Calculating theoretical modes
 for m=0:1:3
     for n=0:1:3
         Modes(m+1,n+1)=C/2/L*(1+m+n)/pi*acos(sqrt(g1*g2))/1000000;
@@ -27,13 +38,7 @@ for m=0:1:3
 end
 
 
-Feom=35.15E6;  %EOM frequency
-OMEGA=2*pi*Feom;  %EOM angular frequency
-Pc=0.016;  %Carrier power in W
-Ps=0.00072;  %Sideband power in W
-Pss=0.000005;  %Secondary sideband power in W
-
-
+%PDH Calculations
 omega=omega0-3*OMEGA:1E5:omega0+3*OMEGA;
 F=r*(exp(i.*(omega-omega0)./FSR)-1)./(1-r*r*exp(i.*(omega-omega0)./FSR));
 F2=F.*conj(F);
