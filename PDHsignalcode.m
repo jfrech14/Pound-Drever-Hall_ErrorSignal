@@ -58,4 +58,4 @@ error2=-2*sqrt(Pc*Ps)*imag(F.*conj(FpO)-conj(F).*FmO)...
 
 angfrequency=-3*OMEGA/(10^6):0.1:3*OMEGA/(10^6);
 frequency=angfrequency/2/pi;
-plot(frequency,error1)
+plot(frequency,error2)
